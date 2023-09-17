@@ -1,29 +1,22 @@
 # NODEJS
 
-- Objects are passed by reference: (but the reference will break when we reassign the value)
-- In javascript null is type of object because of the first implementation of javascript.
-- Undefined is a primitive type in javascript which means that the value to a variable has not been assigned yet.
-- Modules like fs, crypto, dns lookup, and zlib are all synchronous so their calls/operations are sent to libUV's threadpool to prevent main thread (event loop) from blocking.
-- LibUV spawns 4 threads by default. We can also change it by assigning a new count:
+- NodeJS is built on Chrome's V8 engine. It comprises of memory heap and call stack. Whenever we declare a function or variable, memory is allocated to heap and whenever we call a function it is pushed to the call stack and popped from the call stack when the function returns. Call stack follows the LIFO (last in first out) principle.
+- When running a setTimeout with 0 sec delay and an async IO method, the order of execution can never be guaranteed. (min time for setTimeout is 1ms so 0 will always be overridden)
 
-```javascript
-process.env.UV_THREADPOOL_SIZE = 5;
-```
+### LIBUV
 
-- Nodejs provides 2 api functions: asynchronous functions and synchronous functions.
-- The first argument of a nodejs callback handler is the err object.
+- LibUV is a cross platform library written in C language which handles all the async operations in NodeJS. It provides event loop and thread pool for handling async io in NodeJS.
+- LibUV will try to utilize OS' async features and if they are not available then it will utilize it's threadpool.
+- Modules like **fs**, **crypto**, **dns lookup**, and **zlib** are all synchronous so their operations are sent to LibUV's threadpool to prevent main thread (Event Loop) from blocking.
 
-###### LIBUV
+- #### EVENT LOOP
 
-- LibUV is a cross platform library written in C language which handles all the async operations in NodeJS. It provides event loop and thread pool for handling async io in nodejs
-
-- V8 engine comprises of memory heap and call stack. Whenever we declare a function or variable, memory is allocated to heap and whenever we call a function it is pushed to the call stack and popped from the call stack when the function returns. Call stack follows the LIFO (last in first out) data structure. All the async calls will be sent to libuv which then will try to utilize OS' async features and if they are not available then it will send the function to the threadpool.
-
-###### CALL STACK PRIORITY
-
-- Syncronous code (only after the call stack is empty, then event loop will start executing async code)
-- EVENT LOOP:
-
+  - Event loop in NodeJS is a fundamental part of the main thread. The event loop is a crucial component of the main thread responsible for managing async operations, callbacks, and I/O operations without blocking the main thread.
+  - When an asynchronous operation, such as a timer (e.g., setTimeout), I/O operation (e.g., reading a file), or network request, is encountered in the code, Node.js doesn't block the main thread. Instead, it delegates the execution of that asynchronous task to external system libraries or APIs.
+  - The event loop, which is part of the main thread, continually checks the status of these asynchronous tasks. When a task is completed, its associated callback is placed in the appropriate queue (e.g., callback queue or microtask queue).
+  - While the main thread is idle (i.e., there is no more synchronous code to execute), the event loop starts processing items in the callback queues, executing the associated callbacks one by one.
+  - ##### CALL STACK PRIORITY
+  - Syncronous code (only after the call stack is empty, then event loop will start executing async code)
   - Callbacks in microtasks queue (nextTick queue and then promise queue)
   - Callbacks in timer queue (SetTimeout and SetInterval)
   - Callbacks in microtasks queue (nextTick queue and then promise queue)
@@ -34,10 +27,13 @@ process.env.UV_THREADPOOL_SIZE = 5;
   - Callbacks in close queue (Close handlers)
   - One final time microtasks queue (nextTick queu and then promise queue)
 
-- When running a setTimeout with 0 sec delay and an async IO method, the order of execution can never be guaranteed. (min time for setTimeout is 1ms so 0 will always be overridden)
-- IO events are polled and callback functions are added to the IO queue only after the IO is complete.
+- #### THREAD POOL
 
-###### STREAMS AND BUFFERS
+  - Any functions that are sent to threadpool will run in a separate worker thread to prevent the main thread from blocking.
+  - Once the task in the worker thread is completed, NodeJS uses a callback mechanism to notify the main thread (event loop).
+  - No of threads spawned in the threadpool are defined via an environment variable **UV_THREADPOOL_SIZE**. By default the count is **4** and can be changed by assigning the variable a new value if the CPU running the NodeJS application has more cores.
+
+### STREAMS AND BUFFERS
 
 - Stream is a sequence of data that is being moved from one point to another. Useful for processing chunks of data instead of waiting for the complete data. Also useful in audio/video streaming.
 - A buffer represents a chunk of memory allocated on our computer. Buffer objects are used to represent a fixed-length sequence of bytes. Many Node.js APIs support Buffers.
@@ -59,13 +55,13 @@ console.log(buffer.toString()); // prints "daniel"
 
 - NOTE: check filesystem section for stream example
 
-###### CHARACTER SETS AND ENCODING
+### CHARACTER SETS AND ENCODING
 
 - Generally characters are represented by character codes e.g 86 is the numeric representation of character V.
 - Character encoding dictates how to represent a number in a character set as binary data before it can be stored in a computer.
 - UTF8 states that characters should be encoded in bytes (8 bits)
 
-###### CALLBACKS
+### CALLBACKS
 
 - Functions are first class objects. They can be passed as parameters to a function and can also be returned from a function as a value.
 - A function passed as a parameter to another function is called callback.
@@ -85,7 +81,7 @@ obj2.name = "John";
 console.log(obj.name); // logs "John"
 ```
 
-###### MODULES
+### MODULES
 
 - Each module in nodejs has its own scope and the way nodejs achieves that is with IIFE pattern (immediately invoked function expression). so every module is wrapped in an IIFE: (with IIFE each function gets it own private scope)
 
@@ -109,7 +105,7 @@ console.log(obj.name); // logs "John"
 - Just like objects, modules also behave the same so if we do just exports.prop instead of modules.exports = { prop } so the reference will break.
 - To use ES modules, all javascript files need to have .esm extension.
 
-###### PATH MODULE
+### PATH MODULE
 
 - Useful methods:
   - path.join (join just concatenates parts but may not return an absolute path)
@@ -119,13 +115,13 @@ console.log(obj.name); // logs "John"
   - path.parse
   - path.format
 
-###### EVENTS MODULE
+### EVENTS MODULE
 
 - **events** module allows use to work with events in nodejs.
 - **events** module gives us **EventEmitter** class to work with events.
 - We can have multiple listeners for the same event.
 
-###### FILESYSTEM
+### FILESYSTEM
 
 ```javascript
 const fs = require("fs");
@@ -184,6 +180,8 @@ fs.rename("./greeting.txt", "./hello.txt", () => {
   }
 });
 
+//Streams
+
 const readableStream = fs.createReadStream("./file.txt", {
   encoding: "utf-8",
   highWaterMark: 2, //each chunk will be 2 bytes (default is 64)
@@ -197,6 +195,6 @@ readableStream.on("data", (chunk) => {
   writeableStream.write(chunk);
 });
 
-//or we can just pipe the stream without needing to listen on data event:
+//or we can just pipe the stream without needing to listen on "data" event
 readableStream.pipe(writeableStream);
 ```
