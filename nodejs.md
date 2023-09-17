@@ -37,8 +37,8 @@
 
 - Stream is a sequence of data that is being moved from one point to another. Useful for processing chunks of data instead of waiting for the complete data. Also useful in audio/video streaming.
 - A buffer represents a chunk of memory allocated on our computer. Buffer objects are used to represent a fixed-length sequence of bytes. Many Node.js APIs support Buffers.
-- In nodejs, buffers are used for store raw binary data. e.g data from a stream would be stored in a buffer before it gets processed.
-- console logging a buffer in nodejs will print the hex version of the data:
+- In NodeJS, buffers are used for store raw binary data. e.g data from a stream would be stored in a buffer before it gets processed.
+- console logging a buffer in NodeJS will print the hex version of the data:
 
 ```javascript
 const buffer = Buffer.from("daniel");
@@ -61,29 +61,10 @@ console.log(buffer.toString()); // prints "daniel"
 - Character encoding dictates how to represent a number in a character set as binary data before it can be stored in a computer.
 - UTF8 states that characters should be encoded in bytes (8 bits)
 
-### CALLBACKS
-
-- Functions are first class objects. They can be passed as parameters to a function and can also be returned from a function as a value.
-- A function passed as a parameter to another function is called callback.
-- A function that accepts another function as it's argument is called higher order function
-- Synchronous callbacks are those callbacks that are executed immediately.
-- Asyncronous callbacks are those callbacks that are executed after an async operation has completed (when an event has occurred).
-
-```javascript
-const obj = {
-  name: "Daniel",
-};
-
-const obj2 = obj;
-
-obj2.name = "John";
-
-console.log(obj.name); // logs "John"
-```
-
 ### MODULES
 
-- Each module in nodejs has its own scope and the way nodejs achieves that is with IIFE pattern (immediately invoked function expression). so every module is wrapped in an IIFE: (with IIFE each function gets it own private scope)
+- A **module** is a self-contained block of code that encapsulates specific functionality and can be easily reused in other parts of the application.
+- Each module in NodeJS has its own scope and the way NodeJS achieves that is with IIFE pattern (immediately invoked function expression). so every module is wrapped in an IIFE: (with IIFE each function gets it own private scope)
 
 ```javascript
 (function () {
@@ -92,7 +73,7 @@ console.log(obj.name); // logs "John"
 })();
 ```
 
-- Nodejs wraps every module with these params:
+- NodeJS wraps every module with these params:
 
 ```javascript
 (function (exports, require, module, __filename, __dirname) {
@@ -101,7 +82,7 @@ console.log(obj.name); // logs "John"
 })();
 ```
 
-- Nodejs caches the modules whenever we run the require statement so when the second time we require that module it will get that from the cache instead of re-requiring it.
+- NodeJS caches the modules whenever we run the require statement so when the second time we require that module it will get that from the cache instead of re-requiring it.
 - Just like objects, modules also behave the same so if we do just exports.prop instead of modules.exports = { prop } so the reference will break.
 - To use ES modules, all javascript files need to have .esm extension.
 
@@ -117,7 +98,7 @@ console.log(obj.name); // logs "John"
 
 ### EVENTS MODULE
 
-- **events** module allows use to work with events in nodejs.
+- **events** module allows use to work with events in NodeJS.
 - **events** module gives us **EventEmitter** class to work with events.
 - We can have multiple listeners for the same event.
 
@@ -148,7 +129,7 @@ fs.writeFile("./greeting.txt", "Hello World", (err) => {
 });
 
 //Appends to existing file
-fs.appendFile("./greeting.txt", "From Nodejs", (err) => {
+fs.appendFile("./greeting.txt", "From NodeJS", (err) => {
   if (err) {
     throw err;
   }

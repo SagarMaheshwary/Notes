@@ -23,3 +23,4 @@
 - Context API basics
 - Redux (redux toolkit)
 - Code Splitting
+- In React, an "error boundary" is a component that wraps one or more child components and is used to catch and handle errors that occur during rendering, in lifecycle methods, or within the constructors of its child components. Error boundaries are a mechanism for gracefully handling errors in React applications to prevent the entire application from crashing due to a single error.
