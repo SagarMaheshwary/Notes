@@ -1,14 +1,15 @@
-# DESIGN PATTERNS
+# DESIGN PATTERNS/PRINCIPLES
 
-### SOLID
+### DESIGN PRINCIPLES
 
+#### SOLID
 - Single Responsibility
 - Open/Closed Principle
 - Liscov's Substitutuon Principle
 - Interface Seggregation
 - Denpendency Inversion
 
-### MOST COMMON PATTERNS
+### DESIGN PATTERNS
 
 - Singleton
 - Factory
