@@ -10,6 +10,28 @@ DBMS acts as interface between the database and end user or application software
 DBMS manage, update, create data on database. can store structure data, sami-structure data and unstructure data.<br>
 DBMS Provides an organized way of managing, retrieving,and storing from a collection of logically related information.
 
+- #### What is DBMS Engine or Server?
+A database engine is the software component that a database management system (DBMS) uses to create, read, update, and delete (CRUD) data from a database. It is responsible for storing and retrieving data efficiently, and for ensuring the integrity of the data.<br>
+There are many different database engines available, each with its own strengths and weaknesses. Some of the most popular database engines include:<br>
+MySQL<br>
+PostgreSQL<br>
+Oracle Database<br>
+Microsoft SQL Server<br>
+MariaDB<br>
+MongoDB<br>
+Cassandra<br>
+Elasticsearch.
+
+- #### What is a DBMS Storage Engine?
+A storage engine is the software component that a database management system (DBMS) uses to store and retrieve data. It is responsible for managing the physical layout of the data on disk, as well as providing efficient access to the data.<br>
+Some popular storage engines include:<br>
+**InnoDB**: InnoDB is the default storage engine for MySQL and MariaDB. It is a general-purpose storage engine that supports transactions and ACID compliance.<br>
+**MyISAM**: MyISAM is a lightweight storage engine that is often used for read-intensive applications. It does not support transactions, but it offers faster read performance than InnoDB.<br>
+**NDB Cluster**: NDB Cluster is a distributed storage engine that is designed for high-availability and scalability. It is often used for large-scale applications such as e-commerce and social media websites.<br>
+**WiredTiger**: WiredTiger is the default storage engine for MongoDB. It is a high-performance storage engine that is designed for both read-intensive and write-intensive applications.<br>
+**Cassandra**: Cassandra is a distributed storage engine that is designed for high-availability and scalability. It is often used for big data applications such as real-time analytics and data warehousing.
+
+
 - #### Advantages of DBMS?
 **Data Integrity**: DBMSs ensure that data is accurate and consistent by enforcing data constraints and rules.<br>
 **Data Sharing**: DBMSs make it easy to share data between different users and applications.<br>
