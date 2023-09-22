@@ -201,5 +201,17 @@ DBMS partitioning and sharding are both techniques for dividing a large database
 **Partitioning** is typically used to improve performance and manageability. It involves dividing a database table into smaller parts based on a specific criteria, such as date range, region, or customer type. Partitions can be stored on the same server or on different servers.<br>
 **Sharding** is typically used to improve scalability and performance. It involves dividing a database table into smaller parts and distributing them across multiple servers. This allows the database to handle a larger volume of data and more concurrent requests.
 
+- #### What is DBMS Replication and types?
+Replication is the process of copying data from one database to another database. There are two replications <br>
+**Synchronous replication**: Synchronous replication copies data from the primary database to the secondary database in real time. This means that the data on the secondary database is always up-to-date with the data on the primary database.
+**Asynchronous replication**: Asynchronous replication copies data from the primary database to the secondary database at regular intervals. This means that the data on the secondary database may not be as up-to-date as the data on the primary database.
+
+- #### What is DBMS Replication strategies?
+There are a number of different replication strategies that can be used. Some common replication strategies include:<br>
+**Master-slave replication**: Master-slave replication is the simplest type of replication. In master-slave replication, there is a single master database and one or more slave databases. All writes are performed on the master database, and the slave databases are kept up-to-date with the master database through replication.<br>
+**Multi-master replication**: Multi-master replication allows writes to be performed on any of the master databases. This can improve performance and reliability, but it can also be more complex to manage.<br>
+**Peer-to-peer replication**: Peer-to-peer replication allows writes to be performed on any of the databases in the system. This can improve performance and reliability even further, but it can also be even more complex to manage.
+
+
 
 
