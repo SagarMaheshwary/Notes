@@ -4,9 +4,6 @@
 
 - Array
 - String
-- Object
-- Set
-- Map
 - Stack
 - Queue
 - Circular Queue
