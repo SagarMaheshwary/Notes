@@ -5,11 +5,14 @@
 
 ### LIBUV
 
-- LibUV is a cross platform library written in C language which handles all the async operations in NodeJS. It provides event loop and thread pool for handling async io in NodeJS.
+- LibUV is a cross platform library written in C language which handles all the async operations in NodeJS. It provides threadpool (aka workerpool) to handle "expensive" tasks. This includes I/O for which an operating system does not provide a non-blocking version, as well as particularly CPU-intensive tasks.
 - LibUV will try to utilize OS' async features and if they are not available then it will utilize it's threadpool.
 - Modules like **fs**, **crypto**, **dns lookup**, and **zlib** are all synchronous so their operations are sent to LibUV's threadpool to prevent main thread (Event Loop) from blocking.
+- Any functions that are sent to threadpool will run in a separate worker thread to prevent the main thread from blocking.
+- Once the task in the worker thread is completed, NodeJS uses a callback mechanism to notify the main thread (event loop).
+- No of threads spawned in the threadpool are defined via an environment variable **UV_THREADPOOL_SIZE**. By default the count is **4** and can be changed by assigning the variable a new value if the CPU running the NodeJS application has more cores.
 
-- #### EVENT LOOP
+- ### EVENT LOOP
 
   - Event loop in NodeJS is a fundamental part of the main thread. The event loop is a crucial component of the main thread responsible for managing async operations, callbacks, and I/O operations without blocking the main thread.
   - When an asynchronous operation, such as a timer (e.g., setTimeout), I/O operation (e.g., reading a file), or network request, is encountered in the code, Node.js doesn't block the main thread. Instead, it delegates the execution of that asynchronous task to external system libraries or APIs.
@@ -26,12 +29,6 @@
   - Callbacks in microtasks queue (nextTick queue and then promise queue)
   - Callbacks in close queue (Close handlers)
   - One final time microtasks queue (nextTick queu and then promise queue)
-
-- #### THREAD POOL
-
-  - Any functions that are sent to threadpool will run in a separate worker thread to prevent the main thread from blocking.
-  - Once the task in the worker thread is completed, NodeJS uses a callback mechanism to notify the main thread (event loop).
-  - No of threads spawned in the threadpool are defined via an environment variable **UV_THREADPOOL_SIZE**. By default the count is **4** and can be changed by assigning the variable a new value if the CPU running the NodeJS application has more cores.
 
 ### STREAMS AND BUFFERS
 

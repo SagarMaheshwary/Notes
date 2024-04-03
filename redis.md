@@ -3,7 +3,13 @@
 ### NOTES
 
 - Redis is an in-memory key-value pair database.
-- Supports multiple 
+- A multi-model database supporting a varietly of database paradigms with addon modules.
+  - RediSearch: A query and indexing engine for Redis, providing secondary indexing, full-text search, vector similarity search and aggregations.
+  - RedisGraph: A graph database as a Redis module
+  - RedisBloom: Probabilistic Datatypes Module for Redis
+  - RedisAI: a Redis module for executing Deep Learning/Machine Learning models and managing their data.
+  - RedisJSON: Allows storing, updating and fetching JSON values from Redis keys (documents).
+  - RedisTimeSeries: Redis Stack (specifically, its RedisTimeSeries module) adds a time series data structure to Redis.
 - Redis use cases:
   - Caching
   - User Session Management
